@@ -13,7 +13,7 @@ namespace Activty6PABD
 {
     public partial class Form2 : Form
     {
-        private string stringConnection = "data source=BIBLE\\SQLEXPRESS;" + "database=ProdiTI;User ID=sa;Password=AS0203rul";
+        private string stringConnection = "Data Source=BIBLE\\SQLEXPRESS;Initial Catalog=Activity6PABD;User ID=sa;Password=AS0203rul";
         private SqlConnection koneksi;
         
 
@@ -27,14 +27,14 @@ namespace Activty6PABD
         public Form2()
         {
             InitializeComponent();
-            koneksi = new SqlConnection();
+            koneksi = new SqlConnection(stringConnection);
             refreshform();
         }
 
         private void dataGridView()
         {
             koneksi.Open();
-            string str = "select nama_prodi from dbo.prodi";
+            string str = "select id_prodi, nama_prodi from dbo.prodi";
             SqlDataAdapter da = new SqlDataAdapter(str, koneksi);
             DataSet ds = new DataSet();
             da.Fill(ds);
@@ -77,19 +77,26 @@ namespace Activty6PABD
 
         private void SAVE_Click(object sender, EventArgs e)
         {
-            string nmProdi = nmp.Text;
+            string nmProdi = nmp.Text.Trim();
+            string idProdi = textBox1.Text.Trim();
             if (nmProdi == "")
             {
                 MessageBox.Show("masukkan nama prodi", "warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
             }
+            else if (idProdi == "")
+            {
+                MessageBox.Show("masukkan ID prodi", "warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+            }
             else
             {
                 koneksi.Open();
-                string str = "insert into dbo.prodi (nama_prodi)" + "values(@id)";
+                string str = "INSERT INTO prodi (id_prodi, nama_prodi) VALUES (@id_prodi, @nama_prodi)";
                 SqlCommand cmd = new SqlCommand(str, koneksi);
                 cmd.CommandType = CommandType.Text;
-                cmd.Parameters.Add(new SqlParameter("id", nmProdi));
+                cmd.Parameters.Add(new SqlParameter("id_prodi", idProdi));
+                cmd.Parameters.Add(new SqlParameter("nama_prodi", nmProdi));
                 cmd.ExecuteNonQuery();
 
                 koneksi.Close();
@@ -104,6 +111,11 @@ namespace Activty6PABD
             Form1 hu = new Form1();
             hu.Show();
             this.Hide();
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

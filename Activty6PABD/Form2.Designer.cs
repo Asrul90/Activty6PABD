@@ -36,6 +36,8 @@
             this.ADD = new System.Windows.Forms.Button();
             this.CLEAR = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -62,7 +64,7 @@
             // 
             // nmp
             // 
-            this.nmp.Location = new System.Drawing.Point(304, 325);
+            this.nmp.Location = new System.Drawing.Point(305, 345);
             this.nmp.Name = "nmp";
             this.nmp.Size = new System.Drawing.Size(158, 22);
             this.nmp.TabIndex = 2;
@@ -70,7 +72,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(190, 328);
+            this.label1.Location = new System.Drawing.Point(191, 348);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(91, 16);
             this.label1.TabIndex = 3;
@@ -79,7 +81,7 @@
             // 
             // SAVE
             // 
-            this.SAVE.Location = new System.Drawing.Point(304, 373);
+            this.SAVE.Location = new System.Drawing.Point(305, 393);
             this.SAVE.Name = "SAVE";
             this.SAVE.Size = new System.Drawing.Size(70, 21);
             this.SAVE.TabIndex = 4;
@@ -89,7 +91,7 @@
             // 
             // ADD
             // 
-            this.ADD.Location = new System.Drawing.Point(486, 326);
+            this.ADD.Location = new System.Drawing.Point(487, 346);
             this.ADD.Name = "ADD";
             this.ADD.Size = new System.Drawing.Size(63, 21);
             this.ADD.TabIndex = 5;
@@ -99,7 +101,7 @@
             // 
             // CLEAR
             // 
-            this.CLEAR.Location = new System.Drawing.Point(394, 373);
+            this.CLEAR.Location = new System.Drawing.Point(395, 393);
             this.CLEAR.Name = "CLEAR";
             this.CLEAR.Size = new System.Drawing.Size(68, 22);
             this.CLEAR.TabIndex = 6;
@@ -117,11 +119,30 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(305, 317);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(158, 22);
+            this.textBox1.TabIndex = 8;
+            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(191, 320);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(89, 16);
+            this.label2.TabIndex = 9;
+            this.label2.Text = "KODE PRODI";
+            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.CLEAR);
             this.Controls.Add(this.ADD);
@@ -149,5 +170,7 @@
         private System.Windows.Forms.Button ADD;
         private System.Windows.Forms.Button CLEAR;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label2;
     }
 }

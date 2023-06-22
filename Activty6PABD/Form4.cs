@@ -28,7 +28,7 @@ namespace Activty6PABD
             txtNIM.Visible = false;
             SAVE.Enabled = false;
             CLEAR.Enabled = false;
-            ADD.Enabled = false;
+            ADD.Enabled = true;
         }
         public Form4()
         {
@@ -40,7 +40,7 @@ namespace Activty6PABD
         private void dataGridView()
         {
             koneksi.Open();
-            string str = "select * from dbo.status_mahasiswa";
+            string str = "select * from statusmahasiswa";
             SqlDataAdapter da = new SqlDataAdapter(str, koneksi);
             DataSet ds = new DataSet();
             da.Fill(ds);
@@ -51,19 +51,15 @@ namespace Activty6PABD
         private void cbNAMA()
         {
             koneksi.Open();
-            string str = "select nama_mahasiswa from dbo.mahasiswa where " +
-                "not EXIST(select id_status from dbo.status_mahasiswa where " +
-                "status_mahasiswa.nim = mahasiswa.nim)";
-            SqlCommand cmd= new SqlCommand(str, koneksi);
-            SqlDataAdapter da = new SqlDataAdapter(str, koneksi);
-            DataSet ds = new DataSet(); 
-            da.Fill(ds);
-            cmd.ExecuteReader();
+            string query = "SELECT nama_mahasiswa FROM mahasiswa";
+            SqlCommand command = new SqlCommand(query, koneksi);
+            SqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                cbxNAMA.Items.Add(reader.GetString(0));
+            }
+            reader.Close();
             koneksi.Close();
-
-            cbxNAMA.DisplayMember = "nama_mahasiswa";
-            cbxNAMA.ValueMember= "NIM";
-            cbxNAMA.DataSource= ds.Tables[0];
         }
 
         private void cbTAHUNMASUK()
@@ -103,21 +99,24 @@ namespace Activty6PABD
 
         private void cbxNAMA_SelectedIndexChanged(object sender, EventArgs e)
         {
-            koneksi.Open();
-            string nim = "";
-            string strs = "select NIm from dbo.mahasiswa where nama_mahasiswa = @nm";
-            SqlCommand cm = new SqlCommand(strs, koneksi);
-            cm.CommandType = CommandType.Text;
-            cm.Parameters.Add(new SqlParameter("@nm", cbxNAMA.Text));
-            SqlDataReader dr = cm.ExecuteReader();
-            while (dr.Read())
-            {
-                nim = dr["NIM"].ToString();
-            }
-            dr.Close();
-            koneksi.Close();
+            string selectedNama = cbxNAMA.SelectedItem.ToString();
 
-            txtNIM.Text = nim;
+            koneksi.Open();
+            string query = "SELECT nim FROM mahasiswa WHERE nama_mahasiswa = @nama_mahasiswa";
+            SqlCommand command = new SqlCommand(query, koneksi);
+            command.Parameters.AddWithValue("@nama_mahasiswa", selectedNama);
+            SqlDataReader reader = command.ExecuteReader();
+            if (reader.Read())
+            {
+                string nim = reader.GetString(0);
+                txtNIM.Text = nim;
+            }
+            else
+            {
+                txtNIM.Text = "";
+            }
+            reader.Close();
+            koneksi.Close();
         }
 
 
@@ -139,7 +138,7 @@ namespace Activty6PABD
             cbxSTATUSMAHASISWA.Enabled = true;
             txtNIM.Visible = true;
             cbTAHUNMASUK();
-            cbNAMA();
+           
             CLEAR.Enabled = true;
             SAVE.Enabled = true;
             ADD.Enabled = false;
